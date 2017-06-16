@@ -1,0 +1,19 @@
+{
+  "name": "discord-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sjobom/discord_bot"
+  },
+  "author": "chobom",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.1.0"
+  }
+}
