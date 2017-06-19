@@ -3,6 +3,7 @@ const client = new Discord.Client();
 const fs = require("fs");
 
 const config = require("./config.json");
+const util = require("./util.js");
 
 
 client.on('ready', () => {
@@ -10,8 +11,10 @@ client.on('ready', () => {
 });
 
 
+/* VERIFY BOT https://discordapp.com/oauth2/authorize?client_id=325408203166711810&scope=bot
 
 // This loop reads the /events/ folder and attaches each event file to the appropriate event.
+/*
 fs.readdir("./events/", (err, files) => {
     if (err) return console.error(err);
     files.forEach(file => {
@@ -21,31 +24,65 @@ fs.readdir("./events/", (err, files) => {
         client.on(eventName, (...args) => eventFunction.run(client, ...args));
     });
 });
+*/
 
 
 client.on('message', message => {
 
-    if(message.author.bot) return;
-
-    if(message.content.includes(":its_friday:")) {
-        message.channel.send("HEY THATS ME! :smile:");
+    // IS THIS A COMMAND/PICTURE REQUEST OR SHOULD WE JUST REACT
+    if (!message.content.startsWith(config.prefix)){
+        react(message);
     }
+    else {
+        console.log(message.author.username + " in " + message.channel.name + ": " + message.content);
+        const args = message.content.split(" ");
+        const command = args.shift().slice(config.prefix.length);
 
-    //check if it is a command to the bot
-    if (!message.content.startsWith(config.prefix)) return;
-
-    // This is the best way to define args. Trust me.
-    const args = message.content.split(" ");
-    const command = args.shift().slice(config.prefix.length);
-
-    // The list of if/else is replaced with those simple 2 lines:
-    try {
-        let commandFile = require(`./commands/${command}.js`);
-        commandFile.run(client, message, args);
+        // CHECK IF MESSAGES IS A COMMAND
+        try {
+            let commandFile = require(`./commands/${command}.js`);
+            commandFile.run(client, message, args);
         } catch (err) {
+            //console.error(err);
+        }
+        
+        // CHECK AMONG PICTURE LINKS
+        try{
+            const picture_links = require("./pictures/picture_links.json");
+            for(const pictureName in picture_links){
+                if(command === pictureName){
+                    message.channel.send(util.embedPicture(picture_links[pictureName]));
+                }
+            }
+
+        } catch(err){
             console.error(err);
         }
 
+        react(message);
+    }
+    
+
+    
+
 });
+
+function react (message) {
+    if(message.content.includes(":its_friday:")) {
+        message.channel.send("HEY THATS ME! :smile:");
+    }
+    if(message.content.includes("niggah")){
+        //message.reply("I'm the only niggah around here");
+        message.delete();
+    }
+    /*
+    if(message.author.username === "Ingmar"){
+        message.reply("Har du installerat Overwatch viktor?");
+    }
+    */
+    
+    return;
+;}
+
 
 client.login(config.token);
