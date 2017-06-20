@@ -1,12 +1,23 @@
 const util = require("../util.js");
 const request = require("request");
 
-const baseURL = "http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=funny";
+var baseURL = "http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=";
 
 exports.run = (client, message, args) => {
     //addArgumentsToUrl(args, baseURL, function(url) {
+        var url = baseURL;
+        
+        if(args != undefined){
+            for(arg in args){
+                url += args[arg];
+                if(arg < args.length - 1){
+                    url += "+";
+                }
+            }
+        }
+
         try{
-            util.jsonRequest(baseURL, function(data){
+            util.jsonRequest(url, function(data){
                 gif_url = data["data"]["image_original_url"];
                 /*
                 if(gif_url === null){
