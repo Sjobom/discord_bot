@@ -4,10 +4,16 @@ Initiate app with
 ```
 npm install
 ```
-run it with
+Before running for the first time, the file ```config/auth.json``` needs to be created. It should contain a token from https://discordapp.com/developers/applications/me according to this format:
 ```
-node bot.js
+{
+    "token": "XXXXXXXXXXXXXXXXXXX_YOUR_TOKEN_XXXXXXXXXXXXXXXXXXXXXXXX"
+}
 ```
 
-add links to picture_links.json to make the bot send pictures
+run the bot with ```node bot.js``` or ```nodemon bot.js ``` if you want changes to the code to apply automatically.
+
+add links to picture_links.json to make the bot send different pictures
+
+```-help``` will show the available commands
 
