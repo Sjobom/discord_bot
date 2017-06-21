@@ -1,5 +1,5 @@
 const fs = require("fs");
-const config = require("../config.json");
+const config = require("../config/config.json");
 
 exports.run = (client, message, args) => {
     var commands = "";
