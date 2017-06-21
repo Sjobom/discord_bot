@@ -1,10 +1,11 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const fs = require("fs");
+const prompt = require('prompt');
 
 const config = require("./config/config.json");
-const auth = require("./config/auth.json")
 const util = require("./util.js");
+var auth, token;
 
 
 client.on('ready', () => {
@@ -85,5 +86,27 @@ function react (message) {
     return;
 ;}
 
+function loginCheck(callback){
 
-client.login(auth.token);
+    if(!fs.existsSync('config/auth.json')){
+        prompt.start();
+        prompt.get(['token'], function(err, result){
+            if(err){sonsole.log(err); return;}
+            var dict = {"token": result.token};
+            var dictString = JSON.stringify(dict);
+            fs.writeFile('./config/auth.json', dictString);
+        });
+    } else {
+        console.log("I WAS HERE");
+    }
+
+    auth = require("./config/auth.json");
+    token = auth.token;
+    callback();
+}
+
+
+loginCheck(function(){
+    client.login(token);
+});
+
