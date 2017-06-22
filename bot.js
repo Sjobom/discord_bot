@@ -96,8 +96,6 @@ function loginCheck(callback){
             var dictString = JSON.stringify(dict);
             fs.writeFile('./config/auth.json', dictString);
         });
-    } else {
-        console.log("I WAS HERE");
     }
 
     auth = require("./config/auth.json");
