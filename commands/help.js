@@ -15,11 +15,21 @@ exports.run = (client, message, args) => {
             pictures += config.prefix + pictureName + "\n";
         };
 
-        let summary = "Hi I'm Rebecca. I'm a morning person\n";
-        summary += "COMMANDS:\n" + commands;
-        summary += "PICTURES:\n" + pictures;
+        var sounds = "";
+        let summary = "";
+        fs.readdir(config["soundFolder"], (err, files) => {
+            files.forEach(file => {
+                sound = file.split(".")[0];
+                sounds += config.prefix + sound + "\n";
+            });
+            
+            summary += "COMMANDS:\n" + commands;
+            //summary += "PICTURES:\n" + pictures;
+            summary += "SOUNDS:\n" + sounds;
+            message.channel.send(summary).catch(console.error);
+        });
 
-        message.channel.send(summary).catch(console.error);
+        
     });
 
     

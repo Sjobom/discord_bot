@@ -26,5 +26,17 @@ var jsonRequest = function(URL, handleJsonCallback){
     });
 };
 
+var playSound = function(client, message, url){
+    if (message.member.voiceChannel){
+        message.member.voiceChannel.join()
+            .then(connection => {
+                const dispatcher = connection.playFile(url);
+                dispatcher.on('end', ()=> {
+                    message.member.voiceChannel.leave();
+                });
+            })
+    }
+}
 exports.embedPicture = embedPicture;
 exports.jsonRequest = jsonRequest;
+exports.playSound = playSound;

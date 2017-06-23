@@ -2,9 +2,10 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const fs = require("fs");
 const prompt = require('prompt');
-
 const config = require("./config/config.json");
 const util = require("./util.js");
+const picture_links = require("./pictures/picture_links.json");
+
 var auth, token;
 
 
@@ -50,12 +51,35 @@ client.on('message', message => {
         
         // CHECK AMONG PICTURE LINKS
         try{
-            const picture_links = require("./pictures/picture_links.json");
-            for(const pictureName in picture_links){
+            for(var pictureName in picture_links){
                 if(command === pictureName){
                     message.channel.send(util.embedPicture(picture_links[pictureName]));
                 }
             }
+
+        } catch(err){
+            console.error(err);
+        }
+
+        // CHECK AMONG SOUND LINKS
+        try{
+            fs.readdir(config["soundFolder"], (err, files) => {
+                files.forEach(file => {
+                    sound = file.split(".")[0];
+                    if(command === sound){
+                        var soundPath = config.soundFolder + file;
+                        console.log(soundPath);
+                        util.playSound(client, message, soundPath);
+                    }
+                });
+            });
+
+            /*for(var sound in sounds){
+                if(command === sound){
+                    let sound = require(`./sounds/${command}.mp3`);
+                    util.playSound(client, message, args, sounds[sound]);
+                }
+            }*/
 
         } catch(err){
             console.error(err);
