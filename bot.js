@@ -45,47 +45,29 @@ client.on('message', message => {
         try {
             let commandFile = require(`./commands/${command}.js`);
             commandFile.run(client, message, args);
-        } catch (err) {
-            //console.error(err);
-        }
         
         // CHECK AMONG PICTURE LINKS
-        try{
             for(var pictureName in picture_links){
                 if(command === pictureName){
                     message.channel.send(util.embedPicture(picture_links[pictureName]));
                 }
             }
 
-        } catch(err){
-            console.error(err);
-        }
-
         // CHECK AMONG SOUND LINKS
-        try{
             fs.readdir(config["soundFolder"], (err, files) => {
                 files.forEach(file => {
                     sound = file.split(".")[0];
                     if(command === sound){
                         var soundPath = config.soundFolder + file;
-                        console.log(soundPath);
                         util.playSound(client, message, soundPath);
                     }
                 });
             });
 
-            /*for(var sound in sounds){
-                if(command === sound){
-                    let sound = require(`./sounds/${command}.mp3`);
-                    util.playSound(client, message, args, sounds[sound]);
-                }
-            }*/
-
         } catch(err){
-            console.error(err);
+            console.log(err);
         }
 
-        react(message);
     }
     
 
@@ -110,25 +92,39 @@ function react (message) {
     return;
 ;}
 
+// Function to check if an auth.json file exists with a discord API token
 function loginCheck(callback){
-
-    if(!fs.existsSync('config/auth.json')){
-        prompt.start();
-        prompt.get(['token'], function(err, result){
-            if(err){sonsole.log(err); return;}
-            var dict = {"token": result.token};
-            var dictString = JSON.stringify(dict);
-            fs.writeFile('./config/auth.json', dictString);
-        });
+    try{
+        if(!fs.existsSync('config/auth.json')){
+            prompt.start();
+            var promptToken = ()=> {
+                console.log("Insert yout discord app token \n (can be created at https://discordapp.com/developers/applications/me)");
+                prompt.get(['token'], (err, result) =>{
+                    while(result === undefined){
+                        promptToken();
+                    }
+                    if(err){console.log(err); return;}
+                    var dict = {"token": result.token};
+                    var dictString = JSON.stringify(dict);
+                    fs.writeFile('./config/auth.json', dictString, ()=>{
+                        auth = require("./config/auth.json");
+                        callback();
+                    });
+                });
+            };
+            promptToken();
+            
+        } else {
+            auth = require("./config/auth.json");
+            callback();
+        }
+    } catch(err){
+        console.log(err);
     }
-
-    auth = require("./config/auth.json");
-    token = auth.token;
-    callback();
 }
 
 
 loginCheck(function(){
-    client.login(token);
+    client.login(auth.token);
 });
 

@@ -21,7 +21,7 @@ var jsonRequest = function(URL, handleJsonCallback){
 
             }
             else{
-                console.error(error);
+                console.log(error);
             }
     });
 };
@@ -34,6 +34,9 @@ var playSound = function(client, message, url){
                 dispatcher.on('end', ()=> {
                     message.member.voiceChannel.leave();
                 });
+                dispatcher.on('error', (err)=> {
+                    console.log(err);
+                })
             })
     }
 }
