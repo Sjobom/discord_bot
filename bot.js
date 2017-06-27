@@ -55,13 +55,16 @@ client.on('message', message => {
 
         // CHECK AMONG SOUND LINKS
             fs.readdir(config["soundFolder"], (err, files) => {
-                files.forEach(file => {
-                    sound = file.split(".")[0];
-                    if(command === sound){
-                        var soundPath = config.soundFolder + file;
-                        util.playSound(client, message, soundPath);
-                    }
-                });
+                if(files !== undefined){
+                    files.forEach(file => {
+                        sound = file.split(".")[0];
+                        if(command === sound){
+                            var soundPath = config.soundFolder + file;
+                            util.playSound(client, message, soundPath);
+                        }
+                    });
+                }
+                
             });
 
         } catch(err){
