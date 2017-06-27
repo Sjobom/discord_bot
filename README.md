@@ -11,14 +11,18 @@ The first time the app is started it will ask for a discord API token that you n
 }
 ```
 
-run the bot with 
+run the bot with
 ```
 node bot.js
 ``` 
-or with
-```nodemon bot.js ```
-if you want changes to the code to apply automatically.
-
+or install [forever](https://www.npmjs.com/package/forever) to run the bot in the background with
+```
+forever start bot.js
+``` 
+During development the easiest and most convenient way to test the bot is to run it with [nodemon](https://www.npmjs.com/package/nodemon) which will automatically rebuild the project and restart the server
+```
+nodemon bot.js
+```
 Add links to ```pictures/picture_links.json``` to make the bot send different pictures
 Create a folder for sounds and add the location of it to the ```config/config.json``` to be able to send sounds.
 
