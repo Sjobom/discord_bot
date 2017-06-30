@@ -6,9 +6,7 @@ npm install
 ```
 The first time the app is started it will ask for a discord API token that you need to generate from https://discordapp.com/developers/applications/me. It is also possible to create an own file```config/auth.json```. It should contain a token according to this format:
 ```
-{
-    "token": "YOUR_TOKEN"
-}
+{"token": "YOUR_TOKEN"}
 ```
 
 run the bot with
@@ -25,6 +23,7 @@ nodemon bot.js
 ```
 Add links to ```pictures/picture_links.json``` to make the bot send different pictures
 Create a folder for sounds and add the location of it to the ```config/config.json``` to be able to send sounds.
+To be able to [play sounds](https://discord.js.org/#/docs/main/stable/topics/voice) the [ffmpeg-binarines](https://www.npmjs.com/package/ffmpeg-binaries) should be installed globally.
 
 ```-help``` will show the available commands, pictures and sounds
 
