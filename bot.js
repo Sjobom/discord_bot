@@ -32,44 +32,49 @@ fs.readdir("./events/", (err, files) => {
 
 client.on('message', message => {
 
-    // IS THIS A COMMAND/PICTURE REQUEST OR SHOULD WE JUST REACT
-    if (!message.content.startsWith(config.prefix)){
-        react(message);
-    }
-    else {
-        console.log(message.author.username + " in " + message.channel.name + ": " + message.content);
-        const args = message.content.split(" ");
-        const command = args.shift().slice(config.prefix.length);
-
-        // CHECK IF MESSAGES IS A COMMAND
-        try {
-            let commandFile = require(`./commands/${command}.js`);
-            commandFile.run(client, message, args);
-        
-        // CHECK AMONG PICTURE LINKS
-            for(var pictureName in picture_links){
-                if(command === pictureName){
-                    message.channel.send(util.embedPicture(picture_links[pictureName]));
-                }
-            }
-
-        // CHECK AMONG SOUND LINKS
-            fs.readdir(config["soundFolder"], (err, files) => {
-                if(files !== undefined){
-                    files.forEach(file => {
-                        sound = file.split(".")[0];
-                        if(command === sound){
-                            var soundPath = config.soundFolder + file;
-                            util.playSound(client, message, soundPath);
-                        }
-                    });
-                }
-                
-            });
-
-        } catch(err){
-            console.log(err);
+    try{
+        // IS THIS A COMMAND/PICTURE REQUEST OR SHOULD WE JUST REACT
+        if (!message.content.startsWith(config.prefix)){
+            react(message);
         }
+        else {
+            console.log(message.author.username + " in " + message.channel.name + ": " + message.content);
+            const args = message.content.split(" ");
+            const command = args.shift().slice(config.prefix.length);
+
+            // CHECK IF MESSAGES IS A COMMAND
+            try {
+                let commandFile = require(`./commands/${command}.js`);
+                commandFile.run(client, message, args);
+                } catch(err){
+                    console.error(err);
+            }
+            
+            // CHECK AMONG PICTURE LINKS
+                for(var pictureName in picture_links){
+                    if(command === pictureName){
+                        message.channel.send(util.embedPicture(picture_links[pictureName]));
+                    }
+                }
+
+            // CHECK AMONG SOUND LINKS
+                fs.readdir(config["soundFolder"], (err, files) => {
+                    if(files !== undefined){
+                        files.forEach(file => {
+                            sound = file.split(".")[0];
+                            if(command === sound){
+                                var soundPath = config.soundFolder + file;
+                                util.playSound(client, message, soundPath);
+                            }
+                        });
+                    }
+                    
+                });
+
+            
+
+        }
+    }catch(err){
 
     }
     
