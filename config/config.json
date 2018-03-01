@@ -1,4 +1,5 @@
 {
     "prefix": "-",
-    "soundFolder": "./sounds/" 
+    "soundFolder": "./sounds/",
+    "bot_name": "Rebecca"
 }
