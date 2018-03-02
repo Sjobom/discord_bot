@@ -14,8 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^11.1.0",
-    "node-opus": "^0.2.6",
-    "prompt": "^1.0.0",
+    "prompt-promise": "^1.0.3",
     "request": "^2.81.0",
     "unirest": "^0.5.1"
   }
