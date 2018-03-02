@@ -66,16 +66,6 @@ function react (message) {
     if(message.content.includes(":its_friday:")) {
         message.channel.send("HEY THATS ME! :smile:");
     }
-    if(message.content.includes("niggah")){
-        //message.reply("I'm the only niggah around here");
-        message.delete();
-    }
-    /*
-    if(message.author.username === "Ingmar"){
-        message.reply("Har du installerat Overwatch viktor?");
-    }
-    */
-    
     return;
 ;}
 
