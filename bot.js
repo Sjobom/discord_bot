@@ -50,27 +50,6 @@ client.on('message', message => {
                     console.error(err);
             }
             
-            // CHECK AMONG PICTURE LINKS
-                for(var pictureName in picture_links){
-                    if(command === pictureName){
-                        message.channel.send(util.embedPicture(picture_links[pictureName]));
-                    }
-                }
-
-            // CHECK AMONG SOUND LINKS
-                fs.readdir(config["soundFolder"], (err, files) => {
-                    if(files !== undefined){
-                        files.forEach(file => {
-                            sound = file.split(".")[0];
-                            if(command === sound){
-                                var soundPath = config.soundFolder + file;
-                                util.playSound(client, message, soundPath);
-                            }
-                        });
-                    }
-                    
-                });
-
             
 
         }
