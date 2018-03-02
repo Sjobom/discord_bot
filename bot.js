@@ -4,7 +4,6 @@ const fs = require("fs");
 const prompt = require('prompt-promise');
 const config = require("./config/config.json");
 const util = require("./util.js");
-const picture_links = require("./pictures/picture_links.json");
 
 var auth, token;
 
