@@ -1,4 +1,4 @@
-A simple (but hopefully fun) discord bot written with the [discord.js](https://discord.js.org/#/) library.
+A quite simple (but hopefully fun) discord bot written with the [discord.js](https://discord.js.org/#/) library.
 
 ### Installation
 Initiate app with
@@ -28,6 +28,10 @@ forever start bot.js
 * ```-help``` will show all the available commands
 * ```-love <name1> <name2 (optional)>``` will calculate the chance of love between name1 and name2
 * ```-random <tags>``` searches for a random gif based on the tags
+* ```-joke``` displays a random Chuck Norris fact
+
+### Features
+* Spam protection - To prevent unnecessarily many random gifs in the chat a limit is set to 5 gifs within 300 seconds. This limit can be changed or turned off by editing the ```config/config.json``` file.
 
 ### Development
 During development the easiest and most convenient way to test the bot is to run it with [nodemon](https://www.npmjs.com/package/nodemon) which will automatically rebuild the project and restart the server
@@ -37,5 +41,3 @@ nodemon bot.js
 
 ### Contributing
 Feel free to fork this repo and create pull requests if you want to!
-
-
