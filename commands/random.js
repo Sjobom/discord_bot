@@ -1,6 +1,6 @@
 const util = require("../util.js");
 const request = require("request");
-const spam = require("../internal/spam.js");
+const spam = require("../features/spam.js");
 const config = require("../config/config.json");
 
 var baseURL = "http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=";
