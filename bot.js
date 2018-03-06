@@ -32,7 +32,7 @@ fs.readdir("./events/", (err, files) => {
 client.on('message', message => {
 
     try{
-        // IS THIS A COMMAND/PICTURE REQUEST OR SHOULD WE JUST REACT
+        // IS THIS A COMMAND OR SHOULD WE JUST REACT
         if (!message.content.startsWith(config.prefix)){
             react(message);
         }
@@ -41,24 +41,15 @@ client.on('message', message => {
             const args = message.content.split(" ");
             const command = args.shift().slice(config.prefix.length);
 
-            // CHECK IF MESSAGES IS A COMMAND
-            try {
-                let commandFile = require(`./commands/${command}.js`);
-                commandFile.run(client, message, args);
-                } catch(err){
-                    console.error(err);
-            }
-            
-            
-
+            // CHECK IF MESSAGE IS A COMMAND
+            let commandFile = require(`./commands/${command}.js`);
+            commandFile.run(client, message, args);
+        
         }
     }catch(err){
-
+        console.log('error:', err.stack);
     }
     
-
-    
-
 });
 
 function react (message) {
