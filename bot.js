@@ -4,6 +4,7 @@ const fs = require("fs");
 const prompt = require('prompt-promise');
 const config = require("./config/config.json");
 const util = require("./util.js");
+const conversation = require("./features/conversation.js");
 
 var auth, token;
 
@@ -32,15 +33,22 @@ fs.readdir("./events/", (err, files) => {
 client.on('message', message => {
 
     try{
+        const args = message.content.split(" ");
+        // Is the user @mentioning the bot?
+        if(args[0] == "<@" + client.user.id + ">") {
+            conversation.ask(message).then(function(reply){
+                message.channel.send(message.member + ' ' + reply);
+            }).catch(function (error){
+                message.channel.send(message.member + " something went wrong with cleverbot, perhaps the API key is missing?\nerror: " + error);
+            });
+        } 
         // IS THIS A COMMAND OR SHOULD WE JUST REACT
-        if (!message.content.startsWith(config.prefix)){
+        else if (!message.content.startsWith(config.prefix)){
             react(message);
         }
         else {
             console.log(message.author.username + " in " + message.channel.name + ": " + message.content);
-            const args = message.content.split(" ");
             const command = args.shift().slice(config.prefix.length);
-
             // CHECK IF MESSAGE IS A COMMAND
             let commandFile = require(`./commands/${command}.js`);
             commandFile.run(client, message, args);
