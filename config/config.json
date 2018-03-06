@@ -1,5 +1,8 @@
 {
     "prefix": "-",
     "soundFolder": "./sounds/",
-    "bot_name": "Rebecca"
+    "bot_name": "Rebecca",
+    "spam_time_limit": 300,
+    "spam_message_limit": 5,
+    "spam_protection_activated": true
 }
