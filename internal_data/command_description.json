@@ -1,0 +1,10 @@
+{
+    "avatar": "returns your avatar",
+    "bye": "say goodbye to the bot",
+    "day": "the bot will comment the current day",
+    "help": "shows this (DUH)!",
+    "joke": "the bot will make a joke about you",
+    "random": "returns a random gif, based on a single tag (-random funny e.g.)",
+    "search": "returns a gif based on multiple keywords (-search hello sweden e.g.)",
+    "trending": "returns a trending gif (no input)"
+}
