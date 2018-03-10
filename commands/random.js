@@ -11,16 +11,11 @@ exports.run = (client, message, args) => {
         .then(function (data) {
             // If the author has not been spamming he/she can now request a gif!
             var url = baseURL;
-            
-            if(args != undefined){
-                for(arg in args){
-                    url += args[arg];
-                    if(arg < args.length - 1){
-                        url += "+";
-                    }
-                }
-            }
 
+            if(args & args[0]){
+                url += args[0];
+            }
+            
             try{
                 util.jsonRequest(url, function(data){
                     gif_url = data["data"]["image_original_url"];
