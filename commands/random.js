@@ -3,6 +3,7 @@ const request = require("request");
 const spam = require("../features/spam.js");
 const config = require("../config/config.json");
 
+// API: https://developers.giphy.com/docs/#operation--gifs-random-get
 var baseURL = "http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=";
 
 exports.run = (client, message, args) => {
